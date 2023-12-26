@@ -41,6 +41,11 @@ return [
             'modify_file' => true,
 
             /*
+             * The server url configuration for the swagger file.
+             */
+            'server_url' => null,
+
+            /*
              * The oauth configuration for the swagger file.
              */
             'oauth' => [

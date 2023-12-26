@@ -52,6 +52,23 @@ class OpenApiRouteTest extends TestCase
      *
      * @dataProvider openApiFileProvider
      */
+    public function it_sets_server_to_server_url_if_modify_file_is_enabled($openApiFile)
+    {
+        config()->set('swagger-ui.files.0.versions', ['v1' => $openApiFile]);
+        config()->set('swagger-ui.files.0.modify_file', true);
+        config()->set('swagger-ui.files.0.server_url', 'http://foo.bar/api');
+
+        $this->get('swagger/v1')
+            ->assertStatus(200)
+            ->assertJsonCount(1, 'servers')
+            ->assertJsonPath('servers.0.url', 'http://foo.bar/api');
+    }
+
+    /**
+     * @test
+     *
+     * @dataProvider openApiFileProvider
+     */
     public function it_sets_oauth_urls_by_combining_configured_paths_with_current_app_url_if_modify_file_is_enabled($openApiFile)
     {
         config()->set('swagger-ui.files.0.versions', ['v1' => $openApiFile]);
